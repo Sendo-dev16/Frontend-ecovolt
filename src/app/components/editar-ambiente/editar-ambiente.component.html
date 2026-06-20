@@ -1,0 +1,39 @@
+<app-menu></app-menu>
+
+<main class="form-shell">
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>edit</mat-icon>
+      <mat-card-title>Editar ambiente</mat-card-title>
+      <mat-card-subtitle>Vista acoplada a <code>PUT /rooms/{{ idRoom }}</code>.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="actualizarAmbiente()" class="data-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Vivienda</mat-label>
+          <mat-select formControlName="idHome">
+            <mat-option *ngFor="let home of homes" [value]="home.idHome">
+              {{ home.alias }} - {{ home.address }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Selecciona una vivienda.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="name">
+          <mat-error>El nombre es obligatorio.</mat-error>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-button type="button" [routerLink]="['/ambientes', idRoom]">Cancelar</button>
+          <button mat-flat-button color="primary" type="submit">
+            <mat-icon>save</mat-icon>
+            Guardar cambios
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</main>
+

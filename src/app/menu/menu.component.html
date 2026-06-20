@@ -1,0 +1,27 @@
+<mat-toolbar class="app-toolbar" *ngIf="isLogged">
+  <a class="brand" routerLink="/dashboard">
+    <mat-icon>bolt</mat-icon>
+    <span>EcoVolt</span>
+  </a>
+
+  <nav class="nav-links">
+    <a mat-button routerLink="/dashboard" routerLinkActive="active-link">Dashboard</a>
+    <a mat-button routerLink="/viviendas/nueva" routerLinkActive="active-link">Vivienda</a>
+    <a mat-button routerLink="/ambientes/nuevo" routerLinkActive="active-link">Ambiente</a>
+    <a mat-button routerLink="/dispositivos/nuevo" routerLinkActive="active-link">Dispositivo</a>
+    <a mat-button routerLink="/planes" routerLinkActive="active-link">Planes</a>
+    <a *ngIf="isAdmin" mat-button routerLink="/admin/viviendas" routerLinkActive="active-link">Admin viviendas</a>
+    <a *ngIf="isAdmin" mat-button routerLink="/planes/nuevo" routerLinkActive="active-link">Nuevo plan</a>
+  </nav>
+
+  <span class="toolbar-spacer"></span>
+
+  <div class="user-pill">
+    <mat-icon>account_circle</mat-icon>
+    <span>{{ fullName }}</span>
+  </div>
+
+  <button mat-icon-button aria-label="Cerrar sesion" (click)="onLogOut()">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>

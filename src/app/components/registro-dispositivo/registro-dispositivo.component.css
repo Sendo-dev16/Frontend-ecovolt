@@ -1,0 +1,33 @@
+.form-shell {
+  min-height: calc(100vh - 64px);
+  display: grid;
+  place-items: start center;
+  padding: 36px 16px;
+  background: #f6fbf8;
+}
+
+.form-card {
+  width: min(860px, 100%);
+  border-radius: 8px;
+}
+
+.data-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  .data-form {
+    grid-template-columns: 1fr;
+  }
+}
+

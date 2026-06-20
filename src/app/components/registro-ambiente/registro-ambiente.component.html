@@ -1,0 +1,40 @@
+<app-menu></app-menu>
+
+<main class="form-shell">
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>meeting_room</mat-icon>
+      <mat-card-title>Registrar ambiente</mat-card-title>
+      <mat-card-subtitle>Crea una habitacion asociada a una vivienda existente.</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="registrarAmbiente()" class="data-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Vivienda</mat-label>
+          <mat-select formControlName="idHome">
+            <mat-option *ngFor="let home of homes" [value]="home.idHome">
+              {{ home.alias }} - {{ home.address }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Selecciona una vivienda.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre del ambiente</mat-label>
+          <input matInput formControlName="name" placeholder="Cocina, sala, dormitorio">
+          <mat-error>El nombre es obligatorio.</mat-error>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-button type="button" routerLink="/dashboard">Cancelar</button>
+          <button mat-flat-button color="primary" type="submit">
+            <mat-icon>save</mat-icon>
+            Registrar ambiente
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</main>
+

@@ -1,0 +1,43 @@
+<app-menu></app-menu>
+
+<main class="detail-shell">
+  <section class="detail-header" *ngIf="device">
+    <div>
+      <a class="back-link" routerLink="/dashboard">
+        <mat-icon>arrow_back</mat-icon>
+        Volver
+      </a>
+      <p class="eyebrow">Detalle de dispositivo</p>
+      <h1>{{ device.name }}</h1>
+      <p>Vista acoplada a <code>GET /devices/{{ idDevice }}</code>.</p>
+    </div>
+    <div class="header-actions">
+      <a mat-stroked-button [routerLink]="['/dispositivos', idDevice, 'editar']">
+        <mat-icon>edit</mat-icon>
+        Editar
+      </a>
+      <button mat-icon-button color="warn" (click)="eliminarDispositivo()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </section>
+
+  <section class="summary-grid" *ngIf="device">
+    <mat-card class="summary-card">
+      <mat-icon>precision_manufacturing</mat-icon>
+      <span>Marca</span>
+      <strong>{{ device.brand }}</strong>
+    </mat-card>
+    <mat-card class="summary-card">
+      <mat-icon>meeting_room</mat-icon>
+      <span>Ambiente</span>
+      <strong>{{ device.roomName }}</strong>
+    </mat-card>
+    <mat-card class="summary-card">
+      <mat-icon>toggle_on</mat-icon>
+      <span>Estado</span>
+      <strong>{{ device.status === 1 ? 'Activo' : 'Inactivo' }}</strong>
+    </mat-card>
+  </section>
+</main>
+

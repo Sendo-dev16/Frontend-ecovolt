@@ -1,0 +1,65 @@
+<app-menu></app-menu>
+
+<main class="page-shell">
+  <section class="page-header">
+    <div>
+      <p class="eyebrow">Panel Ecovolt</p>
+      <h1>Resumen de consumo y espacios</h1>
+      <p>Administra tus viviendas, ambientes y dispositivos IoT registrados.</p>
+    </div>
+    <a mat-flat-button color="primary" routerLink="/viviendas/nueva">
+      <mat-icon>add_home</mat-icon>
+      Nueva vivienda
+    </a>
+  </section>
+
+  <section class="metric-grid">
+    <mat-card class="metric-card">
+      <mat-icon>home_work</mat-icon>
+      <span>Viviendas</span>
+      <strong>{{ homes.length }}</strong>
+    </mat-card>
+    <mat-card class="metric-card">
+      <mat-icon>devices_other</mat-icon>
+      <span>Dispositivos</span>
+      <strong>{{ totalDevices }}</strong>
+    </mat-card>
+    <mat-card class="metric-card">
+      <mat-icon>workspace_premium</mat-icon>
+      <span>Planes activos</span>
+      <strong>{{ planCount }}</strong>
+    </mat-card>
+  </section>
+
+  <section *ngIf="loading" class="loading-state">
+    <mat-spinner diameter="42"></mat-spinner>
+    <span>Cargando informacion...</span>
+  </section>
+
+  <section *ngIf="!loading && !homes.length" class="empty-state">
+    <mat-icon>add_home_work</mat-icon>
+    <h2>Aun no tienes viviendas registradas</h2>
+    <p>Empieza creando tu primera propiedad para organizar ambientes y equipos.</p>
+    <a mat-flat-button color="primary" routerLink="/viviendas/nueva">Registrar vivienda</a>
+  </section>
+
+  <section *ngIf="!loading && homes.length" class="home-grid">
+    <mat-card class="home-card" *ngFor="let home of homes">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>home</mat-icon>
+        <mat-card-title>{{ home.alias }}</mat-card-title>
+        <mat-card-subtitle>{{ home.city }} - {{ home.ownerName || 'Mi cuenta' }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ home.address }}</p>
+        <div class="device-count">
+          <mat-icon>settings_input_component</mat-icon>
+          <span>{{ home.deviceCount }} dispositivos vinculados</span>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <a mat-button color="primary" [routerLink]="['/viviendas', home.idHome]">Ver detalle</a>
+      </mat-card-actions>
+    </mat-card>
+  </section>
+</main>

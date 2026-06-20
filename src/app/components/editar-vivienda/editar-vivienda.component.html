@@ -1,0 +1,64 @@
+<app-menu></app-menu>
+
+<main class="form-shell">
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>edit_home</mat-icon>
+      <mat-card-title>Editar vivienda</mat-card-title>
+      <mat-card-subtitle>Vista acoplada a <code>PUT /homes/{{ idHome }}</code>.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="actualizarVivienda()" class="data-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Alias</mat-label>
+          <input matInput formControlName="alias">
+          <mat-error>El alias es obligatorio.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Direccion</mat-label>
+          <input matInput formControlName="address">
+          <mat-error>La direccion es obligatoria.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Ciudad</mat-label>
+          <input matInput formControlName="city">
+          <mat-error>La ciudad es obligatoria.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tarifa por kWh</mat-label>
+          <input matInput type="number" min="0" step="0.01" formControlName="energyTariff">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Metros cuadrados</mat-label>
+          <input matInput type="number" min="1" formControlName="squareMeters">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo de propiedad</mat-label>
+          <mat-select formControlName="idPropertyType">
+            <mat-option [value]="null">Sin clasificar</mat-option>
+            <mat-option *ngFor="let type of propertyTypes" [value]="type.idDataCatalog">
+              {{ type.value || type.description }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <p class="hint">
+          Nota: el backend actual devuelve pocos campos de vivienda; por eso tarifa, metros y tipo se muestran con valores editables por defecto.
+        </p>
+
+        <div class="form-actions">
+          <button mat-button type="button" [routerLink]="['/viviendas', idHome]">Cancelar</button>
+          <button mat-flat-button color="primary" type="submit">
+            <mat-icon>save</mat-icon>
+            Guardar cambios
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</main>

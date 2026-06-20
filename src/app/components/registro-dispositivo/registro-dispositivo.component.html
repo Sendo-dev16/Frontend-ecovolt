@@ -1,0 +1,56 @@
+<app-menu></app-menu>
+
+<main class="form-shell">
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>settings_input_component</mat-icon>
+      <mat-card-title>Vincular dispositivo</mat-card-title>
+      <mat-card-subtitle>Selecciona vivienda y ambiente antes de guardar el equipo.</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="registrarDispositivo()" class="data-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Vivienda</mat-label>
+          <mat-select formControlName="idHome">
+            <mat-option *ngFor="let home of homes" [value]="home.idHome">
+              {{ home.alias }} - {{ home.city }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Selecciona una vivienda.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Ambiente</mat-label>
+          <mat-select formControlName="idRoom">
+            <mat-option *ngFor="let room of rooms" [value]="room.idRoom">
+              {{ room.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Selecciona un ambiente.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre del dispositivo</mat-label>
+          <input matInput formControlName="name" placeholder="Medidor cocina">
+          <mat-error>El nombre es obligatorio.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Marca</mat-label>
+          <input matInput formControlName="brand" placeholder="EcoVolt Smart">
+          <mat-error>La marca es obligatoria.</mat-error>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-button type="button" routerLink="/dashboard">Cancelar</button>
+          <button mat-flat-button color="primary" type="submit">
+            <mat-icon>save</mat-icon>
+            Vincular dispositivo
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</main>
+

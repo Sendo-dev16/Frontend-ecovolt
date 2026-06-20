@@ -1,0 +1,92 @@
+<app-menu></app-menu>
+
+<main class="detail-shell">
+  <section class="detail-header" *ngIf="plan">
+    <div>
+      <a class="back-link" routerLink="/planes">
+        <mat-icon>arrow_back</mat-icon>
+        Volver a planes
+      </a>
+      <p class="eyebrow">Detalle de plan</p>
+      <h1>{{ plan.name }}</h1>
+      <p>Vista acoplada a <code>GET /plans/{{ idPlan }}</code>.</p>
+    </div>
+    <div class="header-actions">
+      <a mat-stroked-button [routerLink]="['/planes', idPlan, 'editar']">
+        <mat-icon>edit</mat-icon>
+        Editar
+      </a>
+      <button mat-icon-button color="warn" (click)="eliminarPlan()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </section>
+
+  <section class="summary-grid" *ngIf="plan">
+    <mat-card class="summary-card">
+      <mat-icon>payments</mat-icon>
+      <span>Precio</span>
+      <strong>S/ {{ plan.price | number:'1.2-2' }}</strong>
+    </mat-card>
+    <mat-card class="summary-card">
+      <mat-icon>event</mat-icon>
+      <span>Duracion</span>
+      <strong>{{ plan.durationDays }} dias</strong>
+    </mat-card>
+    <mat-card class="summary-card">
+      <mat-icon>groups</mat-icon>
+      <span>Usuarios activos</span>
+      <strong>{{ activeUsers }}</strong>
+    </mat-card>
+  </section>
+
+  <section class="detail-grid">
+    <mat-card class="info-card" *ngIf="plan">
+      <mat-card-header>
+        <mat-card-title>Descripcion</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ plan.description }}</p>
+        <p><strong>Estado:</strong> {{ plan.status === 1 ? 'Activo' : 'Inactivo' }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="info-card">
+      <mat-card-header>
+        <mat-card-title>Opciones de mejora</mat-card-title>
+        <mat-card-subtitle>Vista acoplada a <code>GET /plans/upgrade-options/currentLimit</code>.</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="upgradeForm" (ngSubmit)="buscarUpgrades()" class="inline-form">
+          <mat-form-field appearance="outline">
+            <mat-label>Limite actual</mat-label>
+            <input matInput type="number" min="0" formControlName="currentLimit">
+          </mat-form-field>
+          <button mat-flat-button color="primary" type="submit">Buscar</button>
+        </form>
+
+        <table mat-table [dataSource]="upgradeOptions" *ngIf="upgradeOptions.length">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Plan</th>
+            <td mat-cell *matCellDef="let item">{{ item.name }}</td>
+          </ng-container>
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Precio</th>
+            <td mat-cell *matCellDef="let item">S/ {{ item.price | number:'1.2-2' }}</td>
+          </ng-container>
+          <ng-container matColumnDef="durationDays">
+            <th mat-header-cell *matHeaderCellDef>Duracion</th>
+            <td mat-cell *matCellDef="let item">{{ item.durationDays }} dias</td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Estado</th>
+            <td mat-cell *matCellDef="let item">{{ item.status === 1 ? 'Activo' : 'Inactivo' }}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</main>
+

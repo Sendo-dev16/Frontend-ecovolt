@@ -1,0 +1,72 @@
+<app-menu></app-menu>
+
+<main class="detail-shell">
+  <section class="detail-header" *ngIf="room">
+    <div>
+      <a class="back-link" [routerLink]="['/viviendas', room.idHome]">
+        <mat-icon>arrow_back</mat-icon>
+        Volver a vivienda
+      </a>
+      <p class="eyebrow">Detalle de ambiente</p>
+      <h1>{{ room.name }}</h1>
+      <p>{{ room.homeAddress || 'Vivienda #' + room.idHome }}</p>
+    </div>
+    <div class="header-actions">
+      <a mat-stroked-button [routerLink]="['/ambientes', idRoom, 'editar']">
+        <mat-icon>edit</mat-icon>
+        Editar
+      </a>
+      <a mat-flat-button color="primary" routerLink="/dispositivos/nuevo">
+        <mat-icon>add_circle</mat-icon>
+        Vincular equipo
+      </a>
+    </div>
+  </section>
+
+  <section class="summary-grid">
+    <mat-card class="summary-card">
+      <mat-icon>devices_other</mat-icon>
+      <span>Dispositivos en ambiente</span>
+      <strong>{{ deviceCount }}</strong>
+    </mat-card>
+  </section>
+
+  <mat-card class="table-card">
+    <mat-card-header>
+      <mat-card-title>Equipos del ambiente</mat-card-title>
+      <mat-card-subtitle>Vista acoplada a <code>GET /devices/room/{{ idRoom }}</code>.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="devices" *ngIf="devices.length; else empty">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let device">{{ device.name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="brand">
+          <th mat-header-cell *matHeaderCellDef>Marca</th>
+          <td mat-cell *matCellDef="let device">{{ device.brand }}</td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td mat-cell *matCellDef="let device">{{ device.status === 1 ? 'Activo' : 'Inactivo' }}</td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let device">
+            <a mat-button [routerLink]="['/dispositivos', device.idDevice]">Detalle</a>
+            <a mat-button [routerLink]="['/dispositivos', device.idDevice, 'editar']">Editar</a>
+            <button mat-icon-button color="warn" (click)="eliminarDispositivo(device)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <ng-template #empty>
+        <p class="empty-inline">No hay dispositivos en este ambiente.</p>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+</main>
+
