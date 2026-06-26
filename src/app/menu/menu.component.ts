@@ -4,6 +4,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { TokenService } from '../security/token.service';
 
 @Component({
@@ -15,7 +16,8 @@ import { TokenService } from '../security/token.service';
     RouterLinkActive,
     MatButtonModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTooltipModule
   ],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
@@ -31,14 +33,19 @@ export class MenuComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.updateMenu();
+  }
+
+  updateMenu(): void {
     this.isLogged = !!this.tokenService.getToken();
     this.fullName = this.tokenService.getUserNameComplete() || this.tokenService.getUserName() || 'Usuario';
-    this.isAdmin = this.tokenService.hasRole('ROLE_ADMIN') || this.tokenService.hasRole('ROLE_MANAGER');
+    // Verificamos si es ADMIN para mostrar las opciones de gestión
+    this.isAdmin = this.tokenService.hasRole('ROLE_ADMIN');
   }
 
   onLogOut(): void {
     this.tokenService.logOut();
+    this.isLogged = false;
     this.router.navigate(['/login']);
   }
 }
-

@@ -1,0 +1,45 @@
+<app-menu></app-menu>
+
+<section class="catalogo">
+  <div class="cabecera">
+    <div class="titulo-seccion">
+        <p class="eyebrow">SaaS Monetización</p>
+        <h1>Planes de Suscripción</h1>
+    </div>
+
+    @if (planesAux | async; as planes) {
+      <span class="contador"> {{ planes.length }} niveles disponibles </span>
+    }
+  </div>
+
+  @if (planesAux | async; as planes) {
+    <div class="contenedor">
+      @for (plan of planes; track plan.idPlan) {
+        <article class="card">
+        <div class="contenido">
+            <h3>{{ plan.name }}</h3>
+            <p class="limite">
+                <mat-icon>devices</mat-icon> 
+                {{ plan.deviceLimit }} Dispositivos permitidos
+            </p>
+            
+            <!-- Cambiado a monthlyPrice -->
+            <p class="precio">S/ {{ plan.monthlyPrice | number:'1.2-2' }}</p>
+            
+            <!-- Cambiado a billingCycle -->
+            <p class="periodo">Ciclo: {{ plan.billingCycle }}</p>
+
+            <a class="btn-detalle" [routerLink]="['/detallePlan', plan.idPlan]">
+                Ver beneficios
+            </a>
+        </div>
+        </article>
+      }
+    </div>
+  } @else {
+    <div class="loading">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Cargando planes desde la base de datos...</p>
+    </div>
+  }
+</section>

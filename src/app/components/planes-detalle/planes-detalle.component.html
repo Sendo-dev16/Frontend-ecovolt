@@ -1,0 +1,52 @@
+<app-menu></app-menu>
+
+<div class="contenedor-detalle">
+  @if(planAux | async; as plan){
+  <div class="detalle-card">
+    <div class="cabecera-detalle">
+      <mat-icon>workspace_premium</mat-icon>
+      <h1>{{ plan.name }}</h1>
+      <div class="tag-estado">
+        {{ plan.status === 1 ? 'Plan Activo' : 'Plan Inactivo' }}
+      </div>
+    </div>
+
+    <div class="info-principal">
+      <div class="precio-grande">
+        <span>S/</span> {{ plan.monthlyPrice | number:'1.2-2' }}
+        <small>Cobro {{ plan.billingCycle }}</small>
+      </div>
+
+      <div class="caracteristicas">
+        <div class="item">
+          <mat-icon>devices</mat-icon>
+          <div>
+            <strong>{{ plan.deviceLimit }} Equipos</strong>
+            <span>Límite de hardware IoT</span>
+          </div>
+        </div>
+        <div class="item">
+          <mat-icon>autorenew</mat-icon>
+          <div>
+            <strong>Renovación</strong>
+            <span>{{ plan.billingCycle }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="descripcion-seccion">
+        <h3>¿Qué incluye este plan?</h3>
+        <p>{{ plan.description || 'Este plan permite la gestión avanzada de dispositivos dentro del ecosistema EcoVolt con soporte para telemetría en tiempo real.' }}</p>
+      </div>
+
+      <button class="btn-regresar" routerLink="/catalogoPlanes">
+        <mat-icon>arrow_back</mat-icon> Volver al catálogo
+      </button>
+    </div>
+  </div>
+  } @else {
+    <div class="loading-detalle">
+      <p>Sincronizando con el servidor...</p>
+    </div>
+  }
+</div>

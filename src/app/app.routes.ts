@@ -16,25 +16,45 @@ import { EditarDispositivoComponent } from './components/editar-dispositivo/edit
 import { DetallePlanComponent } from './components/detalle-plan/detalle-plan.component';
 import { EditarPlanComponent } from './components/editar-plan/editar-plan.component';
 import { authGuard } from './security/auth.guard';
+// Importamos los nuevos componentes estilo profesor
+import { PlanesCatalogo } from './components/planes-catalogo/planes-catalogo.component';
+import { PlanesDetalle } from './components/planes-detalle/planes-detalle.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: LoginComponent },
+  
+  // DASHBOARD
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
+  
+  // CATÁLOGO DE PLANES (Estilo profesor)
+  { path: 'catalogoPlanes', component: PlanesCatalogo, canActivate: [authGuard] },
+  { path: 'detallePlan/:id', component: PlanesDetalle, canActivate: [authGuard] },
+
+  // GESTIÓN ADMIN (VIVIENDAS)
   { path: 'admin/viviendas', component: AdminViviendasComponent, canActivate: [authGuard] },
+  
+  // VIVIENDAS
   { path: 'viviendas/nueva', component: RegistroViviendaComponent, canActivate: [authGuard] },
   { path: 'viviendas/:id/editar', component: EditarViviendaComponent, canActivate: [authGuard] },
   { path: 'viviendas/:id', component: DetalleViviendaComponent, canActivate: [authGuard] },
+  
+  // AMBIENTES
   { path: 'ambientes/nuevo', component: RegistroAmbienteComponent, canActivate: [authGuard] },
   { path: 'ambientes/:id/editar', component: EditarAmbienteComponent, canActivate: [authGuard] },
   { path: 'ambientes/:id', component: DetalleAmbienteComponent, canActivate: [authGuard] },
+  
+  // DISPOSITIVOS
   { path: 'dispositivos/nuevo', component: RegistroDispositivoComponent, canActivate: [authGuard] },
   { path: 'dispositivos/:id/editar', component: EditarDispositivoComponent, canActivate: [authGuard] },
   { path: 'dispositivos/:id', component: DetalleDispositivoComponent, canActivate: [authGuard] },
+  
+  // GESTIÓN DE PLANES (Tablas)
   { path: 'planes', component: ConsultaPlanesComponent, canActivate: [authGuard] },
   { path: 'planes/nuevo', component: RegistroPlanComponent, canActivate: [authGuard] },
   { path: 'planes/:id/editar', component: EditarPlanComponent, canActivate: [authGuard] },
   { path: 'planes/:id', component: DetallePlanComponent, canActivate: [authGuard] },
+  
   { path: '**', redirectTo: 'dashboard' }
 ];
